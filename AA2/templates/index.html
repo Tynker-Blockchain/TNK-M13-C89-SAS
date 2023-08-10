@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Art Guard</title>
+  <!--  Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ '/static/css/style.css' }}" />
+</head>
+
+<body>
+  <nav class="navbar navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand" href="#">
+        <img src="your_logo_image_url.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+        Art Guard
+      </a>
+
+      <!-- User Profile Icon with Dropdown Menu -->
+      <div class="dropdown">
+        <div class="navbar-text me-2" role="button" id="profileDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <i class="fa fa-user" style="font-size: 16px;"></i>
+        </div>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+          <button class="dropdown-item" onclick="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <!-- Left Navigation Bar -->
+        <nav class="navbar bg-light flex-column mt-5 pt-2" style="min-height: 100vh;">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/blockchain">Verify Art(blockchain)</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Best of ArtGuard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Discounts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Art For You</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Art By Type</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col">
+        <div class="container col-md-9 mt-5 pt-5">
+          <div class="row">
+            <!-- Replace the following section with your React component -->
+            <!-- For the purpose of this template, we'll create a static product list -->
+            {% set artData = {
+            '1000': ['Art1', '100', 'https://m.media-amazon.com/images/I/713jNeMYLFL.jpg', 'Very good art.'],
+            '1001': ['Art2', '140', 'https://i.pinimg.com/736x/cb/c6/62/cbc662299bd35357e519fe867444b86c.jpg', 'Very
+            good art.'],
+            '1002': ['Art3', '240', 'https://i.pinimg.com/736x/cb/c6/62/cbc662299bd35357e519fe867444b86c.jpg', 'Very
+            good art.'],
+            '1003': ['Art4', '540', 'https://i.pinimg.com/736x/cb/c6/62/cbc662299bd35357e519fe867444b86c.jpg', 'Very
+            good art.'],
+            '1004': ['Art5', '240', 'https://i.pinimg.com/736x/cb/c6/62/cbc662299bd35357e519fe867444b86c.jpg', 'Very
+            good art.']
+            } %}
+
+            {% for artId, artInfo in artData.items() %}
+            <div class="col-md-4 mb-4">
+              <div class="card h-100">
+                <img src="{{ artInfo[2] }}" class="card-img-top img-fluid" alt="{{ artInfo[0] }}">
+                <div class="card-body">
+                  <h5 class="card-title">{{ artInfo[0] }}</h5>
+                  <p class="card-text">Description of {{ artInfo[3] }}.</p>
+                  <p class="card-text">Price: ${{ artInfo[1] }}</p>
+                  <button class="btn btn-primary"
+                    onclick="openBuyModal('{{artId}}', '{{artInfo[0]}}', '{{artInfo[1]}}', '{{artInfo[2]}}', '{{artInfo[3]}}')">Buy</button>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            <!-- Add more product cards here -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Buy Modal -->
+  <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="buyModalLabel" style="color: #fff;">Buy Artwork</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 modal-img">
+              <img src="https://i.pinimg.com/736x/cb/c6/62/cbc662299bd35357e519fe867444b86c.jpg" id="modalArtImage"
+                class="img-fluid mb-3" alt="Artwork">
+            </div>
+            <div class="col-md-6 modal-text">
+              <h5 id="modalArtTitle"></h5>
+              <p id="modalDescription"></p>
+              <p id="modalPrice"></p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <form action="{{url_for('home', form ='f1')}}" method="post" id="form1">
+            <input type="hidden" id="senderId" name="sender">
+            <input type="hidden" id="receiverId" name="receiver">
+            <input type="hidden" id="artId" name="artId">
+            <input type="hidden" id="price" name="price">
+            <input type="hidden" id="fee" name="fee">
+            <button type="submit" class="btn btn-primary">Buy Now</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    function openBuyModal(artId, artName, artPrice, artUrl, artDescription) {
+      const modalArtImage = document.getElementById('modalArtImage');
+      const modalPrice = document.getElementById('modalPrice');
+      const modalDescription = document.getElementById('modalDescription');
+      const modal = new bootstrap.Modal(document.getElementById('buyModal'));
+
+      // Set the image, price, and description in the modal
+      const imageUrl = artUrl;
+      const price = artPrice;
+      const description = artDescription;
+
+
+      const senderInput = document.getElementById('senderId');
+      const receiverInput = document.getElementById('receiverId');
+      const artIdInput = document.getElementById('artId');
+      const priceInput = document.getElementById('price');
+      const feeInput = document.getElementById('fee');
+
+      senderInput.value = "sender1";
+      receiverInput.value = "receiver1";
+      artIdInput.value = artId;
+      priceInput.value = artPrice;
+      feeInput.value = "$1000";
+
+
+      modalArtImage.src = imageUrl;
+      modalPrice.innerText = `Price in Ether: ${price} ETH`;
+      modalDescription.innerText = `Description: ${description}`;
+
+      // Show the modal
+      modal.show();
+    }
+    // Function to toggle the visibility of the logout button
+    function toggleLogoutButton() {
+      var logoutButton = document.querySelector('.logout-button');
+      logoutButton.style.display = (logoutButton.style.display === 'block') ? 'none' : 'block';
+
+    }
+
+    // Function to handle the logout action (you can implement your logout logic here)
+    function logout() {
+      // Add your logout logic here
+      // For example, redirect the user to the logout page or clear user session data
+      alert('Logout button clicked. Implement your logout logic here.');
+    }
+
+    // Close the logout button when clicking outside the user profile icon
+    document.addEventListener('click', function (event) {
+      var userProfileIcon = document.querySelector('.fa-user');
+      var logoutButton = document.querySelector('.logout-button');
+
+      if (!userProfileIcon.contains(event.target)) {
+        logoutButton.style.display = 'none';
+      }
+    });
+  </script>
+
+  <!-- Add Bootstrap JS and Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

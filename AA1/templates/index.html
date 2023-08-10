@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Data</title>
+    <link rel="icon" href="https://s3-whjr-curriculum-uploads.whjr.online/ee4d9eb1-06b3-4189-81ea-76992cb16590.png"
+        type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ '/static/css/style.css' }}" />
+    <link rel="stylesheet" type="text/css" href="{{ '/static/css/blockStyle.css' }}" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://s3-whjr-curriculum-uploads.whjr.online/ee4d9eb1-06b3-4189-81ea-76992cb16590.png"
+                alt="Logo" class="logo">
+            <h1>Ethereum Transaction</h1>
+        </div>
+        <label for="inputData">Block Number</label>
+        <form action="{{url_for('home', form ='f1')}}" method="post" id="form1">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control custom-input" id="inputData" placeholder="Block Number"
+                        name="blockNumber">
+                    <button type="submit" class="btn btn-primary">Show Data</button>
+                </div>
+            </div>
+        </form>
+        {% if blockData %}
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <td class="text-center"> 
+                        <div class="box-container">
+                            <div class="box rotate">
+                                <div class="box" onmousedown="startDrag(event)" onmousemove="drag(event)"
+                                    onmouseup="endDrag(event)" onclick="toggleInfoSection()">
+                                    <div class="box-front"></div>
+                                    <div class="box-back"></div>
+                                    <div class="box-right"></div>
+                                    <div class="box-left"></div>
+                                    <div class="box-top"></div>
+                                    <div class="box-bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        Total Difficulty: {{blockData.difficulty}}</br>
+                        Block Number: {{blockData.blockNumber}}</br>
+                        Size:{{blockData.size}}</br>
+                        Previous Hash:{{blockData.previousHash}}</br></br>
+                        <!-- Careate new paragraph for the extra data of the block -->
+                        <p style="color:red;">Extra Data of the Block:</p>
+                        <!-- Show the readable timestamp of the block -->
+                        Timestamp:{{blockData.timestamp}}</br>
+                        <!-- Show the difficulty of the block -->
+                        Difficulty:{{blockData.difficulty}}</br>
+                        <!-- Show the total difficulty of the chain until this ethereum block -->
+                        Total Difficulty:{{blockData.totalDifficulty}}</br>
+                        <!-- Show the the maximum gas allowed in ethereum block -->
+                        Gas Limit:{{blockData.gasLimit}}</br>
+                        <!-- Show the total used gas by all transactions in the block -->
+                        Gas Used:{{blockData.gasUsed}}</br>
+
+
+                    </td>
+                </tr>
+            </thead>
+        </table>
+
+        <table>
+            <tr>
+                <th>Sr. No.</th>
+                <th>Transaction hash</th>
+                <th>Sender</th>
+                <th>Revceiver</th>
+                <th>Amount</th>
+            </tr>
+
+            {%for transaction in blockData.transactions%}
+            <tr>
+                <th>{{transaction.srno}}</th>
+                <th>{{transaction.transactionHash}}</th>
+                <th>{{transaction.sender}}</th>
+                <th>{{transaction.receiver}}</th>
+                <th>{{transaction.amount}}</th>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

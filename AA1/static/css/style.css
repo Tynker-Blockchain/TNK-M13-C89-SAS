@@ -1,0 +1,154 @@
+body {
+  background-image: url('https://s3-whjr-curriculum-uploads.whjr.online/cb7b124b-6d73-4b48-a626-69664a3c2b11.jpg');
+  background-size: cover;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 800px; /* Increased the maximum width */
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f2f7fb; /* Glossy white and cream color */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+
+h1 {
+  font-size: 36px;
+  margin: 0;
+  color: #007bff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+form {
+  margin-bottom: 30px;
+  background-color: #fff; /* White form background */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cube {
+  width: 5%;
+  height: 5%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+  cursor: grab;
+}
+
+.face {
+  position: absolute;
+  width: 5%;
+  height: 5%;
+  border: 2px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.front  { background-color: #007bff; transform: translateZ(50px); }
+.back   { background-color: #00a000; transform: translateZ(-50px) rotateY(180deg); }
+.left   { background-color: #ff4500; transform: translateX(-50px) rotateY(-90deg); }
+.right  { background-color: #ffa500; transform: translateX(50px) rotateY(90deg); }
+.top    { background-color: #9400d3; transform: translateY(-50px) rotateX(90deg); }
+.bottom { background-color: #ff1493; transform: translateY(50px) rotateX(-90deg); }
+
+label {
+  font-weight: bold;
+  margin-right: 10px; /* Add some space between the label and input */
+}
+
+.input-group {
+  flex: 1; /* Allow the input to take available space */
+}
+
+.custom-input {
+  width: 40%; /* Reduced the width of the input box */
+  margin-right: 20%; /* Added space between input box and button */
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 8px 20px; /* Adjusted the padding to make the button smaller */
+  margin-left: 10%;
+  margin-right: 10%; /* Added space between button and input box */
+}
+
+/* To ensure alignment between button and input box */
+.form-group {
+  align-items: center;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+table {
+  border-collapse: collapse;
+  table-layout:fixed;
+    width:100%;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  word-wrap: break-word;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+
+.cube {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+  cursor: grab;
+}
+
+.face {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.front  { background-color: #007bff; transform: translateZ(50px); }
+.back   { background-color: #00a000; transform: translateZ(-50px) rotateY(180deg); }
+.left   { background-color: #ff4500; transform: translateX(-50px) rotateY(-90deg); }
+.right  { background-color: #ffa500; transform: translateX(50px) rotateY(90deg); }
+.top    { background-color: #9400d3; transform: translateY(-50px) rotateX(90deg); }
+.bottom { background-color: #ff1493; transform: translateY(50px) rotateX(-90deg); }
